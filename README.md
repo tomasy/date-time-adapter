@@ -5,9 +5,7 @@ DateTime adapter for Mozilla IoT Gateway.
 Purpose: Create rules where date, time, sunrise and sunset is needed
 
 ## Upgrade ##
-Short desciption. Remove the old DateTime device and add it again.
-
-Long desciption: On Things page select DateTime device and then select the three dots in the right lower corner and press "Remove". Then press the "+" in the right lower corner and add the DateTime device again.
+After an upgrade of the addon the pages must be reloaded before the new attributes are visible.
 
 ## Release notes ##
 0.9.5  
