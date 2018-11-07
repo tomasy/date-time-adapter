@@ -4,13 +4,20 @@ DateTime adapter for Mozilla IoT Gateway.
 
 Purpose: Create rules where date and time is needed
 
+## Release notes ##
+0.9.5 
+ * Added property `Hour_N`. Used in rules to create interval. See below for example.
+ * Added property `Minute_N`
+
 ## DateTime have the following properties
  * Sunrise
  * Sunset
  * Weekend. Boolean on for Saturday and Sunday
  * Dark. boolean on when it is dark outside
  * Hour. String, values 0-23
+ * Hour_N. Number, values 0-23. Supports < and > in rule-engine
  * Minute. String, values 0-59. (Note it is called minuteS in rule engine)
+ * Minute_N. Number, values 0-59. Support < and > in rule-engine
  * Even Hour. Boolean on for even hours
  * Even minute. Bollena on for even minute
  * 5 minutes. values 0,5,10,15,20,...,55. (Note it is called minute5 in rule engine)
@@ -33,6 +40,9 @@ To start the fan evey second hour when it is dark and switch it of after 5 minut
 
 If it only for 5 minutes
 `while DateTime minutes5 is 5, turn Fan on`
+
+A motion sensor is only active between 10:00--10:59
+`if DateTime Hour_N is greater than 9 and DateTime Hour_N is less than 11 and Motion sensor is motion, turn Light on`
 
 ## Bugs
 ### Bug 1.
