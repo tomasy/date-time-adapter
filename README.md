@@ -25,16 +25,16 @@ After an upgrade of the addon the pages must be reloaded before the new attribut
  * Even minute. Bollena on for even minute
  * 5 minutes. values 0,5,10,15,20,...,55. (Note it is called minute5 in rule engine)
 ## Setup
-1. Add the **DateTime Adapter** from the ``Settings`` -> ``Addons``
+1. Add the **DateTime Adapter** from the `Settings` -> `Addons`
     - Go ahead and configure it
-    - Valid time zone strings are the names of files or directories in ``/usr/share/zoneinfo/``
+    - Valid time zone strings are `TZ` values from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Example `Europe/Stockholm`
 2. Add the **DateTime** Thing from the ``Things`` -> ``+`` menu
 
 Now it will be available for use in the ``Rules`` palette. (Thanks to @hwine and @mrinx)
 
 ## Configuration
-Configure the position latitude and longitude where you live and horizon. Normally the sunset/sunrise
-is set to some values whe the sun is below horizon.
+Configure the position latitude and longitude where you live and horizon. Normally the `horizon`
+is set to some values where the sun is below horizon.
 
 ## Example
 Turn the lamp in bedroom only on weekdays
@@ -53,6 +53,10 @@ If it only for 5 minutes
 
 A motion sensor is only active between 10:00--10:59
 `if DateTime Hour_N is greater than 9 and DateTime Hour_N is less than 11 and Motion sensor is motion, turn Light on`
+
+## Debug
+### Find calculated sunset and sunrise time
+Go to `Settings` -> `Developer` -> `View Logs` -> `run-app.log`. Search for `sunrise will happen in`. As an example you will get `sunrise will happen in 17:55:20.881772 at 2018-11-12 07:45:23.299329+01:00` so sunrise will be at `07:45`
 
 ## Bugs
 ### Bug 1.
