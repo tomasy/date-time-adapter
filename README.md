@@ -24,6 +24,13 @@ After an upgrade of the addon the pages must be reloaded before the new attribut
  * Even Hour. Boolean on for even hours
  * Even minute. Bollena on for even minute
  * 5 minutes. values 0,5,10,15,20,...,55. (Note it is called minute5 in rule engine)
+## Setup
+1. Add the **DateTime Adapter** from the ``Settings`` -> ``Addons``
+    - Go ahead and configure it
+    - Valid time zone strings are the names of files or directories in ``/usr/share/zoneinfo/``
+2. Add the **DateTime** Thing from the ``Things`` -> ``+`` menu
+
+Now it will be available for use in the ``Rules`` palette. (Thanks to @hwine and @mrinx)
 
 ## Configuration
 Configure the position latitude and longitude where you live and horizon. Normally the sunset/sunrise
