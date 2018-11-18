@@ -28,6 +28,7 @@ After an upgrade of the addon the pages must be reloaded before the new attribut
 1. Add the **DateTime Adapter** from the `Settings` -> `Addons`
     - Go ahead and configure it
     - Valid time zone strings are `TZ` values from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Example `Europe/Stockholm`
+    - For the value `horizon`. Use https://www.timeanddate.com/sun/ , lookup your place and select "Sunrise & Sunset" to see the difference between `-0:34' or `-6`=civil twilight, `-12`=nautical and `-18`=astronomical
 2. Add the **DateTime** Thing from the ``Things`` -> ``+`` menu
 
 Now it will be available for use in the ``Rules`` palette. (Thanks to @hwine and @mrinx)
