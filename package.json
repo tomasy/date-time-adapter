@@ -1,0 +1,77 @@
+{
+  "name": "date-time-adapter",
+  "display_name": "DateTime Adapter",
+  "version": "0.9.1",
+  "description": "Date Time addon for Mozilla IoT Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually.\nBug https://github.com/mozilla-iot/gateway/issues/1452",
+  "author": "tomasy",
+  "main": "main.py",
+  "keywords": [
+    "mozilla",
+    "iot",
+    "adapter",
+    "date",
+    "time"
+  ],
+  "homepage": "https://github.com/tomasy/date-time-adapter",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomasy/date-time-adapter"
+  },
+  "bugs": {
+    "url": "https://github.com/tomasy/date-time-adapter/issues"
+  },
+  "files": [
+    "LICENSE",
+    "SHA256SUMS",
+    "bootstrap.py",
+    "main.py",
+    "package.json",
+    "pkg/__init__.py",
+    "pkg/config.py",
+    "pkg/date_adapter.py",
+    "pkg/date_device.py",
+    "pkg/date_property.py",
+    "pkg/util.py",
+    "README.md",
+    "requirements.txt",
+    "setup.cfg"
+  ],
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "enabled": true,
+    "plugin": true,
+    "exec": "python3 {path}/bootstrap.py",
+    "config": {
+	"timezone": "",
+	"lat": "",
+	"lng": "",
+	"horizon": "-0:34"
+    },
+    "schema": {
+      "type": "object",
+      "description": "Configuration for sunset and sunrise",
+      "properties": {
+        "timezone": {
+          "type": "string",
+          "description": "Timezone. (e.g. CET)"
+        },
+        "lat": {
+          "type": "string",
+          "description": "Latitude (e.g. 56.67 for Gothenburg, Sweden) "
+        },
+        "lng": {
+          "type": "string",
+          "description": "Longitude (e.g. 11.89 for Gothenburg, Sweden)"
+        },
+        "horizon": {
+          "type": "string",
+          "description": "Horizon e.f. '-0:34' or -6=civil twilight, -12=nautical, -18=astronomical"
+        }
+      }
+    }
+  }
+}
