@@ -1,7 +1,7 @@
 {
   "name": "date-time-adapter",
   "display_name": "DateTime Adapter",
-  "version": "0.9.2",
+  "version": "0.9.4",
   "description": "Date Time addon for Mozilla IoT Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter",
   "author": "tomasy",
   "main": "main.py",
@@ -42,11 +42,11 @@
       "min": 2,
       "max": 2
     },
-    "enabled": true,
+    "enabled": false,
     "plugin": true,
     "exec": "python3 {path}/bootstrap.py",
     "config": {
-	"timezone": "",
+	"timezone": "UTC",
 	"lat": "",
 	"lng": "",
 	"horizon": "-0:34"
