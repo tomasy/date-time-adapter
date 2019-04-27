@@ -2,7 +2,7 @@
 
 DateTime adapter for Mozilla IoT Gateway.
 
-Used to set up rules
+Purpose: Create rules where date and time is needed as input
 
 ## DateTime have the following properties
  * Sunrise

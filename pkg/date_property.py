@@ -109,8 +109,6 @@ class DTFiveMinutesProperty(DateTimeProperty):
     def __init__(self, device, dt):
         DateTimeProperty.__init__(self, device, 'minutes5', {'label': '5 minutes', '@type': 'LevelProperty',
                                                          'type': 'string', 'unit': 'minute',
-                                                         'enum': ['0','5','10','15','20','25','30','35','40','45','50','55'],
-                                                         'minimum': 0, 'maximum': 59,
                                                          'readOnly': True})
         self.dt = dt
 

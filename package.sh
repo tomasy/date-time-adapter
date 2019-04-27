@@ -17,14 +17,15 @@ mkdir package
 pip3 install -r requirements.txt -t lib --no-binary pyHS100 --prefix ""
 
 # Put package together
-cp -r lib pkg LICENSE README.md package.json *.py package/
+#cp -r lib pkg LICENSE README.md package.json *.py package/
+cp -r pkg LICENSE README.md package.json *.py package/
 find package -type f -name '*.pyc' -delete
 find package -type d -empty -delete
 
 # Generate checksums
 cd package
 sha256sum *.py pkg/*.py LICENSE > SHA256SUMS
-find lib -type f -exec sha256sum {} \; >> SHA256SUMS
+#find lib -type f -exec sha256sum {} \; >> SHA256SUMS
 cd -
 
 # Make the tarball
