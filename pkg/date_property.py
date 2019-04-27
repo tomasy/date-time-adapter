@@ -64,14 +64,27 @@ class DTMinuteIProperty(DateTimeProperty):
     def get_new_value(self):
         return self.dt.get_minute()
 
+class DTHourNProperty(DateTimeProperty):
+    """Hiur number property type."""
+
+    def __init__(self, device, dt):
+        # should be 'type': integer'
+        DateTimeProperty.__init__(self, device, 'hour_N', {'label': 'Hour N', '@type': 'LevelProperty',
+                                                           'type': 'number', 'unit': 'hour',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 23})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_hour()
+
 class DTMinuteNProperty(DateTimeProperty):
     """Minutes number property type."""
 
     def __init__(self, device, dt):
         # should be 'type': integer'
-        DateTimeProperty.__init__(self, device, 'minutesN', {'label': 'Minute N', '@type': 'LevelProperty',
-                                                        'type': 'number', 'unit': 'minute',
-                                                        'readOnly': True, 'minimum': 0, 'maximum': 59})
+        DateTimeProperty.__init__(self, device, 'minute_N', {'label': 'Minute N', '@type': 'LevelProperty',
+                                                             'type': 'number', 'unit': 'minute',
+                                                             'readOnly': True, 'minimum': 0, 'maximum': 59})
         self.dt = dt
 
     def get_new_value(self):

@@ -8,7 +8,7 @@ from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
                            DateSunriseProperty, DateSunsetProperty, \
                            DTMinuteIProperty, DTMinuteNProperty, DTMinuteSProperty, \
-                           DTFiveMinutesProperty, DTHourProperty, \
+                           DTFiveMinutesProperty, DTHourProperty, DTHourNProperty, \
                            DTDarkProperty
 
 class DTDevice(Device):
@@ -75,6 +75,8 @@ class DateTimeDevice(DTDevice):
         self.add_property(DTMinuteSProperty(self,self.dt))
         self.add_property(DTFiveMinutesProperty(self, self.dt))
         self.add_property(DTHourProperty(self,self.dt))
+        self.add_property(DTHourNProperty(self,self.dt))
+        self.add_property(DTMinuteNProperty(self,self.dt))
 
         self.name = 'DateTime'
         self.description = 'DateTime desc'
@@ -93,7 +95,6 @@ class DateTimeTestDevice(DTDevice):
         self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon)
 
         self.add_property(DTMinuteIProperty(self,self.dt))
-        self.add_property(DTMinuteNProperty(self,self.dt))
 
         self.name = 'DateTimeTest'
         self.description = 'DateTimeTest desc'
