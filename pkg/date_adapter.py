@@ -26,16 +26,24 @@ class DateTimeAdapter(Adapter):
     def start_pairing(self, timeout):
         """  Start pairing process. """
         logging.info('START Pairing')
+
+        log_level = 10
+        if self._config.log_level == 'INFO':
+            logging.getLogger().setLevel(logging.INFO)
+        else:
+            logging.getLogger().setLevel(logging.DEBUG)
+        logging.info("Log level %s", log_level)
+
         dev_id = 'DateTimeDevice'
         if self.get_device(dev_id) is None:
             self.handle_device_added(DateTimeDevice(self, dev_id, self._config))
         else:
             logging.info('Device: %s was already created', dev_id)
-        #  dev_id = 'DateTimeTestDevice'
-        #  if self.get_device(dev_id) is None:
-        #      self.handle_device_added(DateTimeTestDevice(self, dev_id, self._config))
-        #  else:
-        #      logging.info('Device: %s was already created', dev_id)
+        #dev_id = 'DateTimeTestDevice'
+        #if self.get_device(dev_id) is None:
+        #    self.handle_device_added(DateTimeTestDevice(self, dev_id, self._config))
+        #else:
+        #    logging.info('Device: %s was already created', dev_id)
         logging.info('END Pairing')
 
     def cancel_pairing(self):

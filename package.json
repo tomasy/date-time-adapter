@@ -1,7 +1,7 @@
 {
   "name": "date-time-adapter",
   "display_name": "DateTime Adapter",
-  "version": "0.9.5",
+  "version": "1.0.0",
   "description": "Date Time addon for Mozilla IoT Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter",
   "author": "tomasy",
   "main": "main.py",
@@ -49,7 +49,8 @@
 	"timezone": "UTC",
 	"lat": "",
 	"lng": "",
-	"horizon": "-0:34"
+	"horizon": "-0:34",
+	"log_level": "INFO"
     },
     "schema": {
       "type": "object",
@@ -57,11 +58,11 @@
       "properties": {
         "timezone": {
           "type": "string",
-          "description": "Timezone. (e.g. CET)"
+          "description": "Timezone. (e.g. Europe/Stockholm)"
         },
         "lat": {
           "type": "string",
-          "description": "Latitude (e.g. 56.67 for Gothenburg, Sweden) "
+          "description": "Latitude (e.g. 57.67 for Gothenburg, Sweden) "
         },
         "lng": {
           "type": "string",
@@ -69,8 +70,13 @@
         },
         "horizon": {
           "type": "string",
-          "description": "Horizon e.f. '-0:34' or -6=civil twilight, -12=nautical, -18=astronomical"
-        }
+          "description": "Horizon example. '-0:34'=(just below horizon), -6=civil twilight, -12=nautical or -18=astronomical"
+        },
+        "log_level": {
+	  "type": "string",
+          "enum": [ "INFO", "DEBUG" ],
+          "description": "Log level. Use INFO as standard"
+	}
       }
     }
   }

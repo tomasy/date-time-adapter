@@ -10,9 +10,7 @@ import os
 import subprocess
 import sys
 
-
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 
 def install_packages():
     """Install all packages listed in requirements.txt."""
@@ -38,7 +36,6 @@ def install_packages():
     except subprocess.CalledProcessError as e:
         print(e)
         return False
-
 
 try:
     sys.path.append(os.path.join(_BASE_DIR, 'lib'))

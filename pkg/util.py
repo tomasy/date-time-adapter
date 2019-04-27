@@ -26,6 +26,9 @@ class DT():
         """
         return self.now().strftime('%Y-%m-%dT%H:%M:%S+00:00')
 
+    def get_weekday(self):
+        return self.now().weekday()
+
     def is_sat_sun(self):
         isoweekday = self.now().isoweekday()
         return isoweekday > 5
@@ -75,7 +78,7 @@ class DT():
         if self.iix > 241:
             self.iix = 0
         if diff < datetime.timedelta(minutes=1):
-            logging.info('SUNRISE/SUNSET=%s %s', log_txt, time_to_check)
+            logging.debug('SUNRISE/SUNSET=%s %s', log_txt, time_to_check)
             return True
         return False
 
