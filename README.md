@@ -79,3 +79,6 @@ rule is created when it is dark. To work it must first be not dark.
 To solve this after the rule is created go to the things page and click on the dark property in DateTime device.
 The same is valie for e.g. 'weekend'.  
 See bug https://github.com/mozilla-iot/gateway/issues/1452
+
+## Code
+The code can be found by selecting the release branch on Github.
