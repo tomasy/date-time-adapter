@@ -3,7 +3,6 @@
 import logging
 import threading
 import time
-import datetime
 from gateway_addon import Device, Event
 from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
@@ -71,22 +70,7 @@ class DateTimeDevice(DTDevice):
         self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon)
         self.sunrise = self.dt.calc_sunrise()
         self.sunset = self.dt.calc_sunset()
-
-        logging.info('Actual sunset: %s sunrise: %s', self.sunset, self.sunrise)
-
-        if _config.sunrise_offset_mins is not None:
-            if _config.sunrise_offset_mins < 0:
-                self.sunrise = self.sunrise - datetime.timedelta(minutes=-_config.sunrise_offset_mins)
-            if _config.sunrise_offset_mins > 0:
-                self.sunrise = self.sunrise + datetime.timedelta(minutes=_config.sunrise_offset_mins)
-
-        if _config.sunset_offset_mins is not None:
-            if _config.sunset_offset_mins < 0:
-                self.sunset = self.sunset - datetime.timedelta(minutes=-_config.sunset_offset_mins)
-            if _config.sunset_offset_mins > 0:
-                self.sunset = self.sunset + datetime.timedelta(minutes=_config.sunset_offset_mins)                
-        
-        logging.info('Offset sunset: %s sunrise: %s', self.sunset, self.sunrise)
+        logging.info('sunset: %s sunrise: %s', self.sunset, self.sunrise)
 
         self.add_property(DateWeekendProperty(self, self.dt))
         self.add_property(DateEvenHourProperty(self, self.dt))
