@@ -46,14 +46,24 @@
     "plugin": true,
     "exec": "python3 {path}/bootstrap.py",
     "config": {
-	"timezone": "UTC",
-	"lat": "",
-	"lng": "",
-	"horizon": "-0:34",
-	"log_level": "INFO"
+      "timezone": "UTC",
+      "lat": "",
+      "lng": "",
+      "horizon": "-0:34",
+      "sunrise_offset_mins": 0,
+      "sunset_offset_mins": 0,
+      "log_level": "INFO"
     },
     "schema": {
       "type": "object",
+      "required": [
+        "timezone",
+        "lat",
+        "lng",
+        "horizon",
+        "sunset_offset_mins",
+        "sunrise_offset_mins"
+      ],      
       "description": "Configuration for sunset and sunrise",
       "properties": {
         "timezone": {
@@ -72,11 +82,22 @@
           "type": "string",
           "description": "Horizon example. '-0:34'=(just below horizon), -6=civil twilight, -12=nautical or -18=astronomical"
         },
+        "sunset_offset_mins": {
+          "type": "number",
+          "description": "Fine tune the sunset event by adding or subtracting minutes from the actual sunset event time."
+        },
+        "sunrise_offset_mins": {
+          "type": "number",
+          "description": "Fine tune the sunset event by adding or subtracting minutes from the actual sunset event time."
+        },        
         "log_level": {
-	  "type": "string",
-          "enum": [ "INFO", "DEBUG" ],
+          "type": "string",
+          "enum": [
+            "INFO",
+            "DEBUG"
+          ],
           "description": "Log level. Use INFO as standard"
-	}
+        }
       }
     }
   }
