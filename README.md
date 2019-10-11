@@ -1,6 +1,6 @@
 # DateTime adapter
 
-DateTime adapter for Mozilla IoT Gateway.
+DateTime adapter for Mozilla WebThings Gateway.
 
 Purpose: Create rules where date and time is needed as input
 

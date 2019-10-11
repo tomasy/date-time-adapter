@@ -5,27 +5,19 @@ set -e
 version=$(grep version package.json | cut -d: -f2 | cut -d\" -f2)
 
 # Clean up from previous releases
-rm -rf *.tgz package
-rm -f SHA256SUMS
-rm -rf lib
+rm -rf *.tgz package SHA256SUMS
 
 # Prep new package
-mkdir lib
 mkdir package
 
-# Pull down Python dependencies
-pip3 install -r requirements.txt -t lib --no-binary pyHS100 --prefix ""
-
 # Put package together
-#cp -r lib pkg LICENSE README.md package.json *.py package/
-cp -r pkg LICENSE README.md package.json *.py requirements.txt setup.cfg package/
+cp -r pkg LICENSE manifest.json package.json *.py README.md requirements.txt setup.cfg package/
 find package -type f -name '*.pyc' -delete
 find package -type d -empty -delete
 
 # Generate checksums
 cd package
-sha256sum *.py pkg/*.py LICENSE > SHA256SUMS
-#find lib -type f -exec sha256sum {} \; >> SHA256SUMS
+find . -type f \! -name SHA256SUMS -exec sha256sum {} \; >> SHA256SUMS
 cd -
 
 # Make the tarball

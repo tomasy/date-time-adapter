@@ -1,8 +1,8 @@
 {
   "name": "date-time-adapter",
-  "display_name": "DateTime Adapter",
-  "version": "1.0.0",
-  "description": "Date Time addon for Mozilla IoT Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter",
+  "display_name": "Date & Time",
+  "version": "1.1.0",
+  "description": "Date Time addon for Mozilla WebThings Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter",
   "author": "tomasy",
   "main": "main.py",
   "keywords": [
@@ -23,9 +23,11 @@
   },
   "files": [
     "LICENSE",
+    "README.md",
     "SHA256SUMS",
     "bootstrap.py",
     "main.py",
+    "manifest.json",
     "package.json",
     "pkg/__init__.py",
     "pkg/config.py",
@@ -46,11 +48,11 @@
     "plugin": true,
     "exec": "python3 {path}/bootstrap.py",
     "config": {
-	"timezone": "UTC",
-	"lat": "",
-	"lng": "",
-	"horizon": "-0:34",
-	"log_level": "INFO"
+      "timezone": "UTC",
+      "lat": "",
+      "lng": "",
+      "horizon": "-0:34",
+      "log_level": "INFO"
     },
     "schema": {
       "type": "object",
@@ -62,7 +64,7 @@
         },
         "lat": {
           "type": "string",
-          "description": "Latitude (e.g. 57.67 for Gothenburg, Sweden) "
+          "description": "Latitude (e.g. 57.67 for Gothenburg, Sweden)"
         },
         "lng": {
           "type": "string",
@@ -73,10 +75,10 @@
           "description": "Horizon example. '-0:34'=(just below horizon), -6=civil twilight, -12=nautical or -18=astronomical"
         },
         "log_level": {
-	  "type": "string",
+          "type": "string",
           "enum": [ "INFO", "DEBUG" ],
           "description": "Log level. Use INFO as standard"
-	}
+        }
       }
     }
   }
