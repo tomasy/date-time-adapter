@@ -18,7 +18,7 @@ pip3 install -r requirements.txt -t lib --no-binary pyHS100 --prefix ""
 
 # Put package together
 #cp -r lib pkg LICENSE README.md package.json *.py package/
-cp -r pkg LICENSE README.md package.json *.py requirements.txt setup.cfg package/
+cp -r pkg LICENSE README.md package.json manifest.json *.py requirements.txt setup.cfg package/
 find package -type f -name '*.pyc' -delete
 find package -type d -empty -delete
 

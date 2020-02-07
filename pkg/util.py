@@ -6,7 +6,7 @@ import logging
 import pytz
 
 class DT():
-    def __init__(self, timezone, lat, lng, horizon):
+    def __init__(self, timezone, lat, lng, horizon, sunset_offset_mins, sunrise_offset_mins):
         self.timezone = timezone
         self.lat = lat
         self.lng = lng
@@ -87,7 +87,7 @@ class DT():
         sunrise = observer_today.next_rising(ephem.Sun())
         sunrise_local = self.to_localtime(sunrise.datetime())
         logging.info('CALC_SUNRISE today.utc: %s sunrise: %s sunrise_local: %s', observer_today.date, sunrise, sunrise_local)
-        logging.debug('DTSRISE lat: %s lng: %s observer_today: %s', self.lat, self.lng, observer_today)
+        logging.debug('DTSRISE lat: %s lng: %s observer_today: %s', self.lat, self.lng, observer_today) 
         return sunrise_local
 
     def sunrise(self):
@@ -101,7 +101,14 @@ class DT():
         sunset = observer_today.next_setting(ephem.Sun())
         sunset_local = self.to_localtime(sunset.datetime())
         logging.info('CALC_SUNSET today.utc: %s sunset: %s sunset_local: %s', observer_today.date, sunset, sunset_local)
-        logging.debug('DTSET lat: %s lng: %s observer_today: %s', self.lat, self.lng, observer_today)
+
+        # if self.sunset_offset_mins is not None:
+        #     if self.sunset_offset_mins < 0:
+        #         sunset_local = sunset_local - datetime.timedelta(minutes=-self.sunset_offset_mins)
+        #     if self.sunset_offset_mins > 0:
+        #         sunset_local = sunset_local+ datetime.timedelta(minutes=self.sunset_offset_mins)  
+        #     logging.info('CALC_SUNSET_OFFSET override_mins: %s mins override_sunset: %s', self.sunset_offset_mins, sunset_local)
+
         return sunset_local
 
     def sunset(self):

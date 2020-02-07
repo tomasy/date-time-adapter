@@ -3,6 +3,7 @@
 import logging
 import threading
 import time
+import datetime
 from gateway_addon import Device, Event
 from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
@@ -54,7 +55,7 @@ class DTDevice(Device):
                 logging.error('THREAD ERR Exception %s', ex)
                 logging.exception('Exception %s', ex)
                 continue
-        logging.info('POLL STOPED for device: %s', self.name)
+        logging.info('POLL STOPPED for device: %s', self.name)
 
 
 class DateTimeDevice(DTDevice):
@@ -67,9 +68,14 @@ class DateTimeDevice(DTDevice):
         DTDevice.__init__(self, adapter, _id)
         self._context = 'https://iot.mozilla.org/schemas'
         self._type = ['BinarySensor', 'MultiLevelSensor']
-        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon)
+        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon, _config.sunset_offset_mins, _config.sunrise_offset_mins)
         self.sunrise = self.dt.calc_sunrise()
         self.sunset = self.dt.calc_sunset()
+        self.sunset_offset_mins = _config.sunset_offset_mins
+        self.sunrise_offset_mins = _config.sunrise_offset_mins
+        self.sunset_offset_active = False;
+        self.sunrise_offset_active = False;
+
         logging.info('sunset: %s sunrise: %s', self.sunset, self.sunrise)
 
         self.add_property(DateWeekendProperty(self, self.dt))
@@ -91,6 +97,23 @@ class DateTimeDevice(DTDevice):
             'description': 'An event for new sunrise',
             'type': 'string',
         })
+
+        if self.sunset_offset_mins is not None and self.sunset_offset_mins is not 0:
+            title = 'Sunset ' + str(self.sunset_offset_mins) + ' mins'
+            self.add_event('sunset_offset', {
+                'title': title, 'label': 'Sunset_Offset',
+                'description': 'An event for new offset sunset',
+                'type': 'string',
+            })
+        
+        if self.sunrise_offset_mins is not None and self.sunrise_offset_mins is not 0:
+            title = 'Sunrise ' + str(self.sunset_offset_mins) + ' mins'
+            self.add_event('sunrise_offset', {
+                'title': title, 'label': 'Sunrise_Offset',
+                'description': 'An event for new offset sunrise',
+                'type': 'string',
+            })
+
         self.name = 'DateTime'
         self.description = 'DateTime desc'
         self.init()
@@ -99,16 +122,47 @@ class DateTimeDevice(DTDevice):
     def check(self):
         self.check_sunrise()
         self.check_sunset()
+        self.check_offset_sunrise()
+        self.check_offset_sunset()
 
     def check_sunrise(self):
         if self.dt.now() > self.sunrise:
             self.check_send_event(self.sunrise, 'sunrise')
             self.sunrise = self.dt.calc_sunrise()
+            self.sunrise_offset_active = False
 
     def check_sunset(self):
         if self.dt.now() > self.sunset:
             self.check_send_event(self.sunset, 'sunset')
             self.sunset = self.dt.calc_sunset()
+            self.sunset_offset_active = False
+
+    def check_offset_sunrise(self):
+        if self.sunrise_offset_mins is not None and self.sunrise_offset_active is False:
+            offset_sunrise = None
+            if self.sunrise_offset_mins < 0:
+                offset_sunrise = self.sunrise - datetime.timedelta(minutes=-self.sunrise_offset_mins)
+            if self.sunrise_offset_mins > 0:
+                offset_sunrise = self.sunrise + datetime.timedelta(minutes=self.sunrise_offset_mins)  
+
+            if offset_sunrise is not None:
+                if self.dt.now() > offset_sunrise:
+                    self.check_send_event(self.sunrise, 'sunrise_offset')
+                    self.sunrise_offset_active = True
+
+    def check_offset_sunset(self):
+        if self.sunset_offset_mins is not None and self.sunset_offset_active is False:
+            offset_sunset = None
+            if self.sunset_offset_mins < 0:
+                offset_sunset = self.sunset - datetime.timedelta(minutes=-self.sunset_offset_mins)
+            if self.sunset_offset_mins > 0:
+                offset_sunset = self.sunset + datetime.timedelta(minutes=self.sunset_offset_mins)  
+
+            if offset_sunset is not None:
+                if self.dt.now() > offset_sunset:
+                    self.check_send_event(self.sunset, 'sunset_offset')
+                    self.sunset_offset_active = True;
+
 
     """ Check if the sunset/sunrise time occured and if so send event """
     def check_send_event(self, next_sunset_sunrise, event_name):
@@ -127,7 +181,7 @@ class DateTimeTestDevice(DTDevice):
         DTDevice.__init__(self, adapter, _id)
         self._context = 'https://iot.mozilla.org/schemas'
         self._type = ['BinarySensor', 'MultiLevelSensor']
-        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon)
+        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon, _config.sunset_offset_mins, _config.sunrise_offset_mins)
 
         self.add_property(DTMinuteProperty(self,self.dt))
 
