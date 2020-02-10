@@ -99,7 +99,7 @@ class DateTimeDevice(DTDevice):
         })
 
         if self.sunset_offset_mins is not None and self.sunset_offset_mins is not 0:
-            title = 'Sunset ' + str(self.sunset_offset_mins) + ' mins'
+            title = 'Sunset offset ' + str(self.sunset_offset_mins) + ' mins'
             self.add_event('sunset_offset', {
                 'title': title, 'label': 'Sunset_Offset',
                 'description': 'An event for new offset sunset',
@@ -107,7 +107,7 @@ class DateTimeDevice(DTDevice):
             })
         
         if self.sunrise_offset_mins is not None and self.sunrise_offset_mins is not 0:
-            title = 'Sunrise ' + str(self.sunset_offset_mins) + ' mins'
+            title = 'Sunrise offset ' + str(self.sunset_offset_mins) + ' mins'
             self.add_event('sunrise_offset', {
                 'title': title, 'label': 'Sunrise_Offset',
                 'description': 'An event for new offset sunrise',
