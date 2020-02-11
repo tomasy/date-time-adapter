@@ -9,6 +9,8 @@ class Config(Database):
         self.lat = None
         self.lng = None
         self.horizon = None
+        self.sunset_offset_mins = None
+        self.sunrise_offset_mins = None        
         self.log_level = None
         self.open()
         self.load()
@@ -22,6 +24,8 @@ class Config(Database):
             self.lat = config['lat']
             self.lng = config['lng']
             self.horizon = config['horizon']
+            self.sunset_offset_mins = config['sunset_offset_mins']
+            self.sunrise_offset_mins = config['sunrise_offset_mins']         
             self.log_level = config['log_level']
         except Exception as ex:
             logging.exception('Strange config', config)
