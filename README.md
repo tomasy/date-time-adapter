@@ -9,6 +9,10 @@ After an upgrade of the addon the pages must be reloaded before the new attribut
 After upgrade to version 1.0.0 check existing rules because some properties are changed.
 
 ## Release notes ##
+1.0.1  
+No new functionallity
+ * New package format WebThings Gateway version 0.12
+
 1.0.0
  * Check Known Bugs below
  * Added event 'Sunset'/'Sunrise'
