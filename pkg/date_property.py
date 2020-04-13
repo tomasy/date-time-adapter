@@ -1,4 +1,4 @@
-"""Properties for DateTime addon for Mozilla IoT Gateway."""
+"""Properties for DateTime addon for WebThings Gateway."""
 
 import logging
 

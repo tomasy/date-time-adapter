@@ -1,6 +1,6 @@
 # DateTime adapter
 
-DateTime adapter for Mozilla IoT Gateway.
+DateTime adapter for WebThings Gateway.
 
 Purpose: Create rules where date and time is needed as input
 
@@ -64,12 +64,11 @@ If a rule is `if DateTime minute is 5 and DateTime is dark, turn Fan on` it will
 rule is created when it is dark. To work it must first be not dark.  
 To solve this after the rule is created go to the things page and click on the dark property in DateTime device.
 The same is valie for e.g. 'weekend'.  
-See bug https://github.com/mozilla-iot/gateway/issues/1452
+See bug https://github.com/WebThingsIO/gateway/issues/1452
 
 
 ```
-sudo apt install python3-dev libnanomsg-dev
-pip install pyephem # 3.7.6.0 sunset/sunrise
-sudo pip3 install nnpy pytz
-sudo pip3 install git+https://github.com/mozilla-iot/gateway-addon-python.git
+sudo apt install python3-dev
+sudo pip3 install pytz pyephem
+sudo pip3 install git+https://github.com/WebThingsIO/gateway-addon-python.git
 ```

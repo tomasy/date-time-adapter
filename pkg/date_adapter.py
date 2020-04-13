@@ -1,4 +1,4 @@
-"""Adateper for DateTime adapter for Mozilla IoT Gateway."""
+"""Adateper for DateTime adapter for WebThings Gateway."""
 
 import json
 import logging
