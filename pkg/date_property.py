@@ -1,6 +1,7 @@
 """Properties for DateTime addon for Mozilla IoT Gateway."""
 
 import logging
+import datetime
 
 from gateway_addon import Event, Property
 
@@ -150,3 +151,75 @@ class DTWeekdayProperty(DateTimeProperty):
         weekday = self.dt.get_weekday()
         day = self.description['enum'][weekday]
         return day
+
+class DTAzimuthProperty(DateTimeProperty):
+    """Azimunth integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'azimuth', {'title': 'Azimuth', 'label': 'Azimuth', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'degree',
+                                                           'readOnly': True, 'minimum': -180, 'maximum': 180})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_azimuth()
+
+class DTElevationProperty(DateTimeProperty):
+    """Elevation integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'elevation', {'title': 'Elevation', 'label': 'Elevation', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'degree',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 90})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_elevation()
+
+class DTNextEventProperty(DateTimeProperty):
+    """Next event integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'next_event', {'title': 'Next event', 'label': 'Next event', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'minute',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 1440})
+        self.dt = dt
+        self.minute = self.dt.now()-datetime.timedelta(minutes=2)
+        self.next_time = 0
+    def get_new_value(self):
+        td = self.dt.now() - self.minute
+        if td.seconds < 60:
+            return self.next_time
+        self.minute = self.dt.now()
+        rise = self.dt.sunrise()
+        sset = self.dt.sunset()
+        self.next_time = 0
+        if sset > rise: # it's dark, sunrise is next
+            td = rise - self.dt.now()
+            self.next_time = td.seconds/60 #time in minutes to next event
+        if rise > sset: # it's light, sunset is next
+            td = sset - self.dt.now()
+            self.next_time = td.seconds/60
+        return self.next_time
+
+class DTLastEventProperty(DateTimeProperty):
+    """Next event integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'next_event', {'title': 'Next event', 'label': 'Next event', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'minute',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 1440})
+        self.dt = dt
+        self.minute = self.dt.now()-datetime.timedelta(minutes=2)
+        self.next_time = 0
+    def get_new_value(self):
+        td = self.dt.now() - self.minute
+        if td.seconds < 60:
+            return self.next_time
+        self.minute = self.dt.now()
+        rise = self.dt.sunrise()
+        sset = self.dt.sunset()
+        self.next_time = 0
+        if sset > rise: # it's dark, sunrise is next
+            td = rise - self.dt.now()
+            self.next_time = td.seconds/60 #time in minutes to next event
+        if rise > sset: # it's light, sunset is next
+            td = sset - self.dt.now()
+            self.next_time = td.seconds/60
+        return self.next_time

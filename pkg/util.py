@@ -4,6 +4,7 @@ import datetime
 import ephem
 import logging
 import pytz
+import math
 
 class DT():
     def __init__(self, timezone, lat, lng, horizon, sunset_offset_mins, sunrise_offset_mins):
@@ -12,6 +13,9 @@ class DT():
         self.lng = lng
         self.horizon = horizon
         self.iix = 1200
+        self.azimuth = 0 #will compute in calc_sunrise
+        self.elevation = 0 #will compute in calc_sunrise
+        self.computetoggle = 0
         self.next_sunrise = self.calc_sunrise()
         self.next_sunset = self.calc_sunset()
         logging.info('DTS lat: %s lng: %s', self.lat, self.lng)
@@ -46,6 +50,22 @@ class DT():
     def get_minute(self):
         return self.now().minute
 
+    def compute_azel(self):
+        if (self.is_even_minute() and self.computetoggle == 0) or (self.is_even_minute() == False and self.computetoggle == 1):
+            self.computetoggle = 1 - self.computetoggle
+            observer_today = self.get_observer()
+            s=ephem.Sun(observer_today)
+            self.azimuth=s.az.znorm*180/math.pi
+            self.elevation=s.alt.znorm*180/math.pi
+
+    def get_azimuth(self):
+        self.compute_azel()
+        return self.azimuth
+        
+    def get_elevation(self):
+        self.compute_azel()
+        return self.elevation
+        
     def get_hour(self):
         return self.now().hour
 
@@ -85,6 +105,9 @@ class DT():
     def calc_sunrise(self):
         observer_today = self.get_observer()
         sunrise = observer_today.next_rising(ephem.Sun())
+        s=ephem.Sun(observer_today)
+        self.azimuth=s.az.znorm*180/math.pi
+        self.elevation=s.alt.znorm*180/math.pi
         sunrise_local = self.to_localtime(sunrise.datetime())
         logging.info('CALC_SUNRISE today.utc: %s sunrise: %s sunrise_local: %s', observer_today.date, sunrise, sunrise_local)
         logging.debug('DTSRISE lat: %s lng: %s observer_today: %s', self.lat, self.lng, observer_today) 

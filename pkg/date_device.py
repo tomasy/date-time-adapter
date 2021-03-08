@@ -9,7 +9,9 @@ from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
                            DTMinuteProperty, \
                            DTFiveMinutesProperty, DTHourProperty, \
-                           DTDarkProperty, DTWeekdayProperty
+                           DTDarkProperty, DTWeekdayProperty, \
+                           DTAzimuthProperty, DTElevationProperty, \
+                           DTNextEventProperty, DTLastEventProperty
 
 class DTDevice(Device):
     """Date device type."""
@@ -86,6 +88,10 @@ class DateTimeDevice(DTDevice):
         self.add_property(DTMinuteProperty(self,self.dt))
         self.add_property(DTFiveMinutesProperty(self, self.dt))
         self.add_property(DTWeekdayProperty(self, self.dt))
+        self.add_property(DTAzimuthProperty(self, self.dt))
+        self.add_property(DTElevationProperty(self, self.dt))
+        self.add_property(DTNextEventProperty(self, self.dt))
+        self.add_property(DTLastEventProperty(self, self.dt))
 
         self.add_event('sunset', {
             'title': 'Sunset', 'label': 'Sunset',
@@ -99,7 +105,7 @@ class DateTimeDevice(DTDevice):
         })
 
         if self.sunset_offset_mins is not None and self.sunset_offset_mins is not 0:
-            title = 'Sunset offset ' + str(self.sunset_offset_mins) + ' mins'
+            title = 'SunsetOffset' + str(self.sunset_offset_mins) + 'mins'
             self.add_event('sunset_offset', {
                 'title': title, 'label': 'Sunset_Offset',
                 'description': 'An event for new offset sunset',
@@ -107,7 +113,7 @@ class DateTimeDevice(DTDevice):
             })
         
         if self.sunrise_offset_mins is not None and self.sunrise_offset_mins is not 0:
-            title = 'Sunrise offset ' + str(self.sunset_offset_mins) + ' mins'
+            title = 'SunriseOffset' + str(self.sunrise_offset_mins) + 'mins'
             self.add_event('sunrise_offset', {
                 'title': title, 'label': 'Sunrise_Offset',
                 'description': 'An event for new offset sunrise',
