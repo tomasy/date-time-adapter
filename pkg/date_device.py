@@ -76,8 +76,12 @@ class DateTimeDevice(DTDevice):
         self.sunset = self.dt.calc_sunset()
         self.sunset_offset_mins = _config.sunset_offset_mins
         self.sunrise_offset_mins = _config.sunrise_offset_mins
-        self.sunset_offset_active = False;
+        self.sunset_offset_active = False; # let it trigger, if < 0 
+        if (self.sunset_offset_mins is not None and self.sunset_offset_mins > 0):
+            self.sunset_offset_active = True; # wait for sunset to trigger if +
         self.sunrise_offset_active = False;
+        if (self.sunrise_offset_mins is not None and self.sunrise_offset_mins > 0):
+            self.sunrise_offset_active = True;
 
         logging.info('sunset: %s sunrise: %s', self.sunset, self.sunrise)
 
@@ -147,10 +151,10 @@ class DateTimeDevice(DTDevice):
     def check_offset_sunrise(self):
         if self.sunrise_offset_mins is not None and self.sunrise_offset_active is False:
             offset_sunrise = None
-            if self.sunrise_offset_mins < 0:
+            if self.sunrise_offset_mins < 0: #before sunrise, sunrise is next
                 offset_sunrise = self.sunrise - datetime.timedelta(minutes=-self.sunrise_offset_mins)
-            if self.sunrise_offset_mins > 0:
-                offset_sunrise = self.sunrise + datetime.timedelta(minutes=self.sunrise_offset_mins)  
+            if self.sunrise_offset_mins > 0: #after sunrise, last sunrise is relevant
+                offset_sunrise = self.dt.last_sunrise + datetime.timedelta(minutes=self.sunrise_offset_mins)  
 
             if offset_sunrise is not None:
                 if self.dt.now() > offset_sunrise:
@@ -163,7 +167,7 @@ class DateTimeDevice(DTDevice):
             if self.sunset_offset_mins < 0:
                 offset_sunset = self.sunset - datetime.timedelta(minutes=-self.sunset_offset_mins)
             if self.sunset_offset_mins > 0:
-                offset_sunset = self.sunset + datetime.timedelta(minutes=self.sunset_offset_mins)  
+                offset_sunset = self.dt.last_sunset + datetime.timedelta(minutes=self.sunset_offset_mins)  
 
             if offset_sunset is not None:
                 if self.dt.now() > offset_sunset:

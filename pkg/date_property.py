@@ -185,12 +185,12 @@ class DTNextEventProperty(DateTimeProperty):
         return self.dt.get_nexttime()
 
 class DTLastEventProperty(DateTimeProperty):
-    """Next event integer property"""
+    """Last event integer property"""
     def __init__(self, device, dt):
-        DateTimeProperty.__init__(self, device, 'next_event', {'title': 'Next event', 'label': 'Next event', '@type': 'LevelProperty',
+        DateTimeProperty.__init__(self, device, 'last_event', {'title': 'Last event', 'label': 'Last event', '@type': 'LevelProperty',
                                                            'type': 'integer', 'unit': 'minute',
                                                            'readOnly': True, 'minimum': 0, 'maximum': 1440})
         self.dt = dt
 
     def get_new_value(self):
-        return self.dt.get_nexttime()
+        return self.dt.get_lasttime()

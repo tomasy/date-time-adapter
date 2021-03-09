@@ -9,7 +9,7 @@
       "strict_min_version": "0.10.0"
     }
   }, 
-  "homepage_url": "https://github.com/tomasy/date-time-adapter", 
+  "homepage_url": "https://github.com/wfahle/date-time-adapter", 
   "id": "date-time-adapter", 
   "license": "MPL-2.0", 
   "manifest_version": 1, 
