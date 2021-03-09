@@ -150,3 +150,47 @@ class DTWeekdayProperty(DateTimeProperty):
         weekday = self.dt.get_weekday()
         day = self.description['enum'][weekday]
         return day
+
+class DTAzimuthProperty(DateTimeProperty):
+    """Azimunth integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'azimuth', {'title': 'Azimuth', 'label': 'Azimuth', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'degree',
+                                                           'readOnly': True, 'minimum': -180, 'maximum': 180})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_azimuth()
+
+class DTElevationProperty(DateTimeProperty):
+    """Elevation integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'elevation', {'title': 'Elevation', 'label': 'Elevation', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'degree',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 90})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_elevation()
+
+class DTNextEventProperty(DateTimeProperty):
+    """Next event integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'next_event', {'title': 'Next event', 'label': 'Next event', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'minute',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 1440})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_nexttime()
+
+class DTLastEventProperty(DateTimeProperty):
+    """Last event integer property"""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'last_event', {'title': 'Last event', 'label': 'Last event', '@type': 'LevelProperty',
+                                                           'type': 'integer', 'unit': 'minute',
+                                                           'readOnly': True, 'minimum': 0, 'maximum': 1440})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_lasttime()

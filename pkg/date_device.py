@@ -4,12 +4,15 @@ import logging
 import threading
 import time
 import datetime
+
 from gateway_addon import Device, Event
 from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
                            DTMinuteProperty, \
                            DTFiveMinutesProperty, DTHourProperty, \
-                           DTDarkProperty, DTWeekdayProperty
+                           DTDarkProperty, DTWeekdayProperty, \
+                           DTAzimuthProperty, DTElevationProperty, \
+                           DTNextEventProperty, DTLastEventProperty
 
 class DTDevice(Device):
     """Date device type."""
@@ -73,8 +76,12 @@ class DateTimeDevice(DTDevice):
         self.sunset = self.dt.calc_sunset()
         self.sunset_offset_mins = _config.sunset_offset_mins
         self.sunrise_offset_mins = _config.sunrise_offset_mins
-        self.sunset_offset_active = False;
+        self.sunset_offset_active = False; # let it trigger, if < 0 
+        if (self.sunset_offset_mins is not None and self.sunset_offset_mins > 0):
+            self.sunset_offset_active = True; # wait for sunset to trigger if +
         self.sunrise_offset_active = False;
+        if (self.sunrise_offset_mins is not None and self.sunrise_offset_mins > 0):
+            self.sunrise_offset_active = True;
 
         logging.info('sunset: %s sunrise: %s', self.sunset, self.sunrise)
 
@@ -86,6 +93,10 @@ class DateTimeDevice(DTDevice):
         self.add_property(DTMinuteProperty(self,self.dt))
         self.add_property(DTFiveMinutesProperty(self, self.dt))
         self.add_property(DTWeekdayProperty(self, self.dt))
+        self.add_property(DTAzimuthProperty(self, self.dt))
+        self.add_property(DTElevationProperty(self, self.dt))
+        self.add_property(DTNextEventProperty(self, self.dt))
+        self.add_property(DTLastEventProperty(self, self.dt))
 
         self.add_event('sunset', {
             'title': 'Sunset', 'label': 'Sunset',
@@ -107,7 +118,7 @@ class DateTimeDevice(DTDevice):
             })
         
         if self.sunrise_offset_mins is not None and self.sunrise_offset_mins is not 0:
-            title = 'Sunrise offset ' + str(self.sunset_offset_mins) + ' mins'
+            title = 'Sunrise offset ' + str(self.sunrise_offset_mins) + ' mins'
             self.add_event('sunrise_offset', {
                 'title': title, 'label': 'Sunrise_Offset',
                 'description': 'An event for new offset sunrise',
@@ -140,10 +151,10 @@ class DateTimeDevice(DTDevice):
     def check_offset_sunrise(self):
         if self.sunrise_offset_mins is not None and self.sunrise_offset_active is False:
             offset_sunrise = None
-            if self.sunrise_offset_mins < 0:
+            if self.sunrise_offset_mins < 0: #before sunrise, sunrise is next
                 offset_sunrise = self.sunrise - datetime.timedelta(minutes=-self.sunrise_offset_mins)
-            if self.sunrise_offset_mins > 0:
-                offset_sunrise = self.sunrise + datetime.timedelta(minutes=self.sunrise_offset_mins)  
+            if self.sunrise_offset_mins > 0: #after sunrise, last sunrise is relevant
+                offset_sunrise = self.dt.last_sunrise + datetime.timedelta(minutes=self.sunrise_offset_mins)  
 
             if offset_sunrise is not None:
                 if self.dt.now() > offset_sunrise:
@@ -156,7 +167,7 @@ class DateTimeDevice(DTDevice):
             if self.sunset_offset_mins < 0:
                 offset_sunset = self.sunset - datetime.timedelta(minutes=-self.sunset_offset_mins)
             if self.sunset_offset_mins > 0:
-                offset_sunset = self.sunset + datetime.timedelta(minutes=self.sunset_offset_mins)  
+                offset_sunset = self.dt.last_sunset + datetime.timedelta(minutes=self.sunset_offset_mins)  
 
             if offset_sunset is not None:
                 if self.dt.now() > offset_sunset:
@@ -179,7 +190,7 @@ class DateTimeTestDevice(DTDevice):
         _id -- ID of this device
         """
         DTDevice.__init__(self, adapter, _id)
-        self._context = 'https://iot.mozilla.org/schemas'
+        self._context = 'https://webthings.io/schemas'
         self._type = ['BinarySensor', 'MultiLevelSensor']
         self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon, _config.sunset_offset_mins, _config.sunrise_offset_mins)
 
