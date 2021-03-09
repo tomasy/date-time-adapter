@@ -24,7 +24,7 @@ find package -type d -empty -delete
 
 # Generate checksums
 cd package
-sha256sum *.py pkg/*.py LICENSE > SHA256SUMS
+sha256sum *.py pkg/*.py *.json pkg/*.json LICENSE > SHA256SUMS
 #find lib -type f -exec sha256sum {} \; >> SHA256SUMS
 cd -
 
