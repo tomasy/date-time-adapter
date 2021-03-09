@@ -1,6 +1,6 @@
 {
   "author": "tomasy", 
-  "description": "Date Time addon for Mozilla IoT Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter", 
+  "description": "Date Time addon for WebThings Gateway\nBecause of a bug in rule engine after adding a 'Dark' or 'Weekend' to the rule, change state for them manually. See https://github.com/tomasy/date-time-adapter", 
   "gateway_specific_settings": {
     "webthings": {
       "exec": "python3 {path}/bootstrap.py", 

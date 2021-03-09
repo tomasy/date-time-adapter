@@ -130,11 +130,11 @@ class DT():
         sunset = observer_today.next_setting(ephem.Sun())
         sunset_local = self.to_localtime(sunset.datetime())
         logging.info('CALC_SUNSET today.utc: %s sunset: %s sunset_local: %s', observer_today.date, sunset, sunset_local)
+        logging.debug('DTSET lat: %s lng: %s observer_today: %s', self.lat, self.lng, observer_today) 
         observer_today.date = ephem.Date(observer_today.date - 24*ephem.hour)
         sunset = observer_today.next_setting(ephem.Sun())
         self.last_sunset = self.to_localtime(sunset.datetime())
         logging.debug('LAST_SUNSET yesterday.utc: %s sunset: %s last_sunset: %s', observer_today.date, sunset, self.last_sunset)
-
         return sunset_local
 
     def sunset(self):

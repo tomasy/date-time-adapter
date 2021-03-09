@@ -12,17 +12,18 @@
     "date",
     "time"
   ],
-  "homepage": "https://github.com/tomasy/date-time-adapter",
+  "homepage": "https://github.com/wfahle/date-time-adapter",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomasy/date-time-adapter"
+    "url": "https://github.com/wfahle/date-time-adapter"
   },
   "bugs": {
-    "url": "https://github.com/tomasy/date-time-adapter/issues"
+    "url": "https://github.com/wfahle/date-time-adapter/issues"
   },
   "files": [
-    "LICENSE", 
+    "LICENSE",
+    "SHA256SUMS",
     "bootstrap.py",
     "main.py",
     "package.json",
