@@ -14,6 +14,7 @@ After upgrade to version 1.0.0 check existing rules because some properties are 
  * Fixed bug in offsets where they would not fire after the original Event
  * Added readonly Azimuth property which represents the azimuth angle of the sun at sunrise on the current day. This can help determine certain events like blinding light or solar panel position
  * Added readonly Elevation property which represents the elevation angle of the sun at sunrise on the current day. This can help determine certain events like blinding light or solar panel position
+ * Added Next time and Last time properties which represent the next/last sunset/sunrise
  
 1.0.1
  * Add Sunrise Offset Minutes and Sunset Offset Minutes config which if set, generates a Sunrise/Sunset event offset from the actual Sunrise/Sunset event.

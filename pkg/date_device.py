@@ -4,6 +4,7 @@ import logging
 import threading
 import time
 import datetime
+
 from gateway_addon import Device, Event
 from .util import DT
 from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMinuteProperty, \
@@ -105,7 +106,7 @@ class DateTimeDevice(DTDevice):
         })
 
         if self.sunset_offset_mins is not None and self.sunset_offset_mins is not 0:
-            title = 'SunsetOffset' + str(self.sunset_offset_mins) + 'mins'
+            title = 'Sunset offset ' + str(self.sunset_offset_mins) + ' mins'
             self.add_event('sunset_offset', {
                 'title': title, 'label': 'Sunset_Offset',
                 'description': 'An event for new offset sunset',
@@ -113,7 +114,7 @@ class DateTimeDevice(DTDevice):
             })
         
         if self.sunrise_offset_mins is not None and self.sunrise_offset_mins is not 0:
-            title = 'SunriseOffset' + str(self.sunrise_offset_mins) + 'mins'
+            title = 'Sunrise offset ' + str(self.sunrise_offset_mins) + ' mins'
             self.add_event('sunrise_offset', {
                 'title': title, 'label': 'Sunrise_Offset',
                 'description': 'An event for new offset sunrise',
@@ -185,7 +186,7 @@ class DateTimeTestDevice(DTDevice):
         _id -- ID of this device
         """
         DTDevice.__init__(self, adapter, _id)
-        self._context = 'https://iot.mozilla.org/schemas'
+        self._context = 'https://webthings.io/schemas'
         self._type = ['BinarySensor', 'MultiLevelSensor']
         self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon, _config.sunset_offset_mins, _config.sunrise_offset_mins)
 
