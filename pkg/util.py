@@ -7,7 +7,7 @@ import pytz
 import math
 
 class DT():
-    def __init__(self, timezone, lat, lng, horizon, sunset_offset_mins, sunrise_offset_mins):
+    def __init__(self, timezone, lat, lng, horizon):
         self.timezone = timezone
         self.lat = lat
         self.lng = lng
@@ -35,6 +35,15 @@ class DT():
         """
         return self.now().strftime('%Y-%m-%dT%H:%M:%S+00:00')
 
+    def get_year(self):
+        return self.now().year
+
+    def get_month(self):
+        return self.now().month
+
+    def get_day(self):
+        return self.now().day
+
     def get_weekday(self):
         return self.now().weekday()
 
@@ -54,6 +63,7 @@ class DT():
 
     def get_minute(self):
         return self.now().minute
+        
 
     def compute_azel(self):
         if (self.is_even_minute() and self.computetoggle == 0) or (self.is_even_minute() == False and self.computetoggle == 1):

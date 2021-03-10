@@ -50,7 +50,7 @@ class DateTimeProperty(Property):
 
             if new_value != self.get_value():
                 self.new_value(self.get_value(), new_value)
-                logging.debug('Device: %s Property: %s = %s (%s)', self.device.name, self.name, new_value, self.get_value())
+                #logging.debug('Device: %s Property: %s = %s (%s)', self.device.name, self.name, new_value, self.get_value())
                 self.set_cached_value(new_value)
                 self.device.notify_property_changed(self)
         except Exception as ex:
@@ -80,6 +80,39 @@ class DTHourProperty(DateTimeProperty):
 
     def get_new_value(self):
         return self.dt.get_hour()
+
+class DTDayProperty(DateTimeProperty):
+    """Day integer property type."""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'day', {'title': 'Day', 'label': 'Day', '@type': 'LevelProperty',
+                                                         'type': 'integer', 'unit': 'day',
+                                                         'readOnly': True, 'minimum': 1, 'maximum': 31})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_day()
+
+class DTMonthProperty(DateTimeProperty):
+    """Month integer property type."""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'month', {'title': 'Month', 'label': 'Month', '@type': 'LevelProperty',
+                                                         'type': 'integer', 'unit': 'month',
+                                                         'readOnly': True, 'minimum': 1, 'maximum': 12})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_month()
+
+class DTYearProperty(DateTimeProperty):
+    """Year integer property type."""
+    def __init__(self, device, dt):
+        DateTimeProperty.__init__(self, device, 'year', {'title': 'Year', 'label': 'Year', '@type': 'LevelProperty',
+                                                         'type': 'integer', 'unit': 'year',
+                                                         'readOnly': True, 'minimum': 2000, 'maximum': 3000})
+        self.dt = dt
+
+    def get_new_value(self):
+        return self.dt.get_year()
 
 class DTFiveMinutesProperty(DateTimeProperty):
     """Five minutes property"""
