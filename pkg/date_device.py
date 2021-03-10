@@ -12,7 +12,8 @@ from .date_property import DateWeekendProperty, DateEvenHourProperty, DateEvenMi
                            DTFiveMinutesProperty, DTHourProperty, \
                            DTDarkProperty, DTWeekdayProperty, \
                            DTAzimuthProperty, DTElevationProperty, \
-                           DTNextEventProperty, DTLastEventProperty
+                           DTNextEventProperty, DTLastEventProperty, \
+                           DTYearProperty, DTMonthProperty, DTDayProperty
 
 class DTDevice(Device):
     """Date device type."""
@@ -103,6 +104,9 @@ class DateTimeDevice(DTDevice):
         self.add_property(DTElevationProperty(self, self.dt))
         self.add_property(DTNextEventProperty(self, self.dt))
         self.add_property(DTLastEventProperty(self, self.dt))
+        self.add_property(DTYearProperty(self, self.dt))
+        self.add_property(DTMonthProperty(self, self.dt))
+        self.add_property(DTDayProperty(self, self.dt))
 
         self.add_event('sunset', {
             'title': 'Sunset', 'label': 'Sunset',
