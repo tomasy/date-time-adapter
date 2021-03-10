@@ -50,7 +50,7 @@ class DateTimeProperty(Property):
 
             if new_value != self.get_value():
                 self.new_value(self.get_value(), new_value)
-                logging.debug('Device: %s Property: %s = %s (%s)', self.device.name, self.name, new_value, self.get_value())
+                #logging.debug('Device: %s Property: %s = %s (%s)', self.device.name, self.name, new_value, self.get_value())
                 self.set_cached_value(new_value)
                 self.device.notify_property_changed(self)
         except Exception as ex:

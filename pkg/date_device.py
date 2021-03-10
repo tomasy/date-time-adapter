@@ -71,11 +71,17 @@ class DateTimeDevice(DTDevice):
         DTDevice.__init__(self, adapter, _id)
         self._context = 'https://iot.mozilla.org/schemas'
         self._type = ['BinarySensor', 'MultiLevelSensor']
-        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon, _config.sunset_offset_mins, _config.sunrise_offset_mins)
+        self.dt = DT(_config.timezone, _config.lat, _config.lng, _config.horizon)
         self.sunrise = self.dt.calc_sunrise()
         self.sunset = self.dt.calc_sunset()
-        self.sunset_offset_mins = _config.sunset_offset_mins
-        self.sunrise_offset_mins = _config.sunrise_offset_mins
+        if _config.sunset_offset_mins is not None:
+            self.sunset_offset_mins = _config.sunset_offset_mins
+        else
+            self.sunset_offset_mins = 0
+        if _config.sunrise_offset_mins is not None:
+            self.sunrise_offset_mins = _config.sunrise_offset_mins
+        else
+            self.sunrise_offset_mins = 0
         self.sunset_offset_active = False; # let it trigger, if < 0 
         if (self.sunset_offset_mins is not None and self.sunset_offset_mins > 0):
             self.sunset_offset_active = True; # wait for sunset to trigger if +

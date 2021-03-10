@@ -7,7 +7,7 @@ import pytz
 import math
 
 class DT():
-    def __init__(self, timezone, lat, lng, horizon, sunset_offset_mins, sunrise_offset_mins):
+    def __init__(self, timezone, lat, lng, horizon):
         self.timezone = timezone
         self.lat = lat
         self.lng = lng
