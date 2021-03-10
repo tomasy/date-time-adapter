@@ -9,6 +9,12 @@ After upgrade the addon the pages must be reloaded before the new attributes are
 After upgrade to version 1.0.2 check existing rules because some properties are changed.
 
 ## Release notes ##
+1.0.3
+ * Implemented cross compile steps
+ * Added Year/Month/Day properties
+ * Fixed bug with install on top of version 1.0.1 (config)
+ * Removed verbosity of debug messages
+
 1.0.2
  * Fixed bug in Sunrise offset minuts and Sunset offset minutes where it would name the events after the sunset offset only
  * Fixed bug in offsets where they would not fire after the original Event
