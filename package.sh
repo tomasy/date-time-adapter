@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 
-set -e
+# Setup environment for building inside Dockerized toolchain
+[ $(id -u) = 0 ] && umask 0
 
 version=$(grep version package.json | cut -d: -f2 | cut -d\" -f2)
 
